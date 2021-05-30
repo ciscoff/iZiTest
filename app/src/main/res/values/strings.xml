@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">iZiTest</string>
+    <string name="url_github">https://api.github.com/</string>
+</resources>
