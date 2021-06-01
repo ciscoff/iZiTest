@@ -37,25 +37,14 @@ class MainViewModelImpl(
     }
 
     // TODO Проверить в каком потоке Activity будет получать
-    override val repositories = fetchUseCase.fetchData().asLiveData(Dispatchers.IO)
+    override val repositories: LiveData<String> =
+        fetchUseCase.fetchData().asLiveData(/*Dispatchers.IO*/)
 
     override fun sendData(data: List<String>) {
         viewModelScope.launch {
             withContext(Dispatchers.Default) {
                 writeUseCase.writeData(data)
             }
-        }
-    }
-
-    class Factory(
-        private val fetchUseCase: FetchUseCase,
-        private val writeUseCase: WriteUseCase
-    ) : ViewModelProvider.Factory {
-
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return modelClass
-                .getConstructor(FetchUseCase::class.java, WriteUseCase::class.java)
-                .newInstance(fetchUseCase, writeUseCase)
         }
     }
 }

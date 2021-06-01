@@ -20,8 +20,8 @@ class NetworkModule {
     @Provides
     fun okHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .readTimeout(1000, TimeUnit.MILLISECONDS)
-            .writeTimeout(1000, TimeUnit.MILLISECONDS)
+            .readTimeout(5000, TimeUnit.MILLISECONDS)
+            .writeTimeout(5000, TimeUnit.MILLISECONDS)
             .addInterceptor(interceptor)
             .build()
     }
