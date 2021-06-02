@@ -37,8 +37,9 @@ class MainViewModelImpl(
     }
 
     // TODO Проверить в каком потоке Activity будет получать
-    override val repositories: LiveData<String> =
-        fetchUseCase.fetchData().asLiveData(/*Dispatchers.IO*/)
+    override val repositories: LiveData<String> = liveData {
+        emitSource(fetchUseCase.fetchData().asLiveData())
+    }
 
     override fun sendData(data: List<String>) {
         viewModelScope.launch {

@@ -1,8 +1,10 @@
 package barabudev.izitest.data
 
+import java.util.concurrent.TimeUnit
+
 interface CoolPrinter {
     companion object {
-        const val DELAY = 1000L
+        val DELAY = TimeUnit.MILLISECONDS.toMillis(1000)
     }
 
     suspend fun printData(data: List<String>)
