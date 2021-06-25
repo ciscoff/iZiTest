@@ -9,7 +9,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -31,7 +31,7 @@ class NetworkModule {
     fun gitHubEndPoint(okHttpClient: OkHttpClient, context: Context): Retrofit {
         return Retrofit.Builder()
             .baseUrl(context.getString(R.string.url_github))
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create())
             .client(okHttpClient)
             .build()
     }
