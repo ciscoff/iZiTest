@@ -1,6 +1,7 @@
 package barabudev.izitest.utils
 
 import android.content.SharedPreferences
+import com.squareup.moshi.JsonDataException
 import java.io.IOException
 import javax.inject.Inject
 
@@ -37,8 +38,7 @@ class PreferencesHelper @Inject constructor(val preferences: SharedPreferences) 
         return preferences.getOrNull<String>(key)?.let { `object` ->
             try {
                 AdapterFactory.create(clazz).fromJson(`object`)
-
-            } catch (e: IOException) {
+            } catch (e: JsonDataException) {
                 null
             }
         }
@@ -47,5 +47,4 @@ class PreferencesHelper @Inject constructor(val preferences: SharedPreferences) 
     fun remove(key: String) {
         preferences.edit().remove(key).apply()
     }
-
 }
