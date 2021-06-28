@@ -101,8 +101,8 @@ class PreferencesHelperTest {
         with(mockPreferences) {
             every { contains(KEY_JSON) } returns true
             every { getString(KEY_JSON, anyString()) } returns dataJsonWrong
-            every { getOrNull(KEY_JSON, Foo::class.java) } throws TypeNotSupportedException()
-            every { getOrNull(KEY_JSON, String::class.java) } returns dataJsonWrong
+            every { getOrNull(KEY_JSON, Foo::class) } throws TypeNotSupportedException()
+            every { getOrNull(KEY_JSON, String::class) } returns dataJsonWrong
 
             val result = helper.get<Foo>(KEY_JSON)
 
@@ -117,12 +117,12 @@ class PreferencesHelperTest {
     }
 
     @Test
-    fun `incomplete json returns null`() {
+    fun `incomplete json returns not null`() {
         with(mockPreferences) {
             every { contains(KEY_JSON) } returns true
             every { getString(KEY_JSON, anyString()) } returns dataJsonIncomplete
-            every { getOrNull(KEY_JSON, Foo::class.java) } throws TypeNotSupportedException()
-            every { getOrNull(KEY_JSON, String::class.java) } returns dataJsonIncomplete
+            every { getOrNull(KEY_JSON, Foo::class) } throws TypeNotSupportedException()
+            every { getOrNull(KEY_JSON, String::class) } returns dataJsonIncomplete
 
             val result = helper.get<Foo>(KEY_JSON)
 
@@ -143,8 +143,8 @@ class PreferencesHelperTest {
             every { contains(KEY_JSON) } returns true
             every { contains(KEY) } returns true
             every { getString(KEY_JSON, anyString()) } returns dataJson
-            every { getOrNull(KEY_JSON, Foo::class.java) } throws TypeNotSupportedException()
-            every { getOrNull(KEY_JSON, String::class.java) } returns dataJson
+            every { getOrNull(KEY_JSON, Foo::class) } throws TypeNotSupportedException()
+            every { getOrNull(KEY_JSON, String::class) } returns dataJson
 
             val result = helper.get<Foo>(KEY_JSON)
 
@@ -245,6 +245,21 @@ class PreferencesHelperTest {
 
         verify(exactly = 2) {
             mockPreferences.set(KEY, any())
+        }
+    }
+
+    @Test
+    fun `get Long should work well`() {
+
+        val expected = 10L
+
+        with(mockPreferences) {
+            every { contains(eq(KEY)) } returns true
+            every { getOrNull<Long>(eq(KEY), any()) } returns expected
+
+            val result = helper.get<Long>(KEY)
+
+            assert(result == expected)
         }
     }
 

@@ -1,6 +1,7 @@
 package barabudev.izitest.utils
 
 import android.content.SharedPreferences
+import kotlin.reflect.KClass
 
 class TypeNotSupportedException(message: String = NOT_SUPPORTED_TYPE) :
     Exception(message) {
@@ -24,7 +25,7 @@ fun SharedPreferences.set(key: String, value: Any?) {
 @Suppress("UNCHECKED_CAST")
 fun <T : Any> SharedPreferences.getOrNull(
     key: String,
-    clazz: Class<T>
+    clazz: KClass<T>
 ): T? {
     return if (!contains(key)) null
     else when (clazz) {
